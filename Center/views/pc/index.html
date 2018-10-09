@@ -1,0 +1,382 @@
+<?template "pc/base/base.html" .?>
+
+<?define "head"?>
+<link href="/static/css/player.min.css" rel="stylesheet" />
+
+<?end?>
+
+<?define "body"?>
+	<div class="channel-cate" ng-class="{true:'',false:'maxed-min'}[leftSidebarStatus]" ng-controller="LeftSidebarCtrl">
+		<div class="maxed">
+			<div class="nav-head">
+				<div class="logoimg">
+					<a href="" id="logo">
+						<img src="/static/img/logo_mobile.png" alt="直播吧" />
+					</a>
+				</div>
+				<div class="search">
+					<form method="get" class="search-form" target="_blank" action="/search/">
+						<input type="text" name="keyword" placeholder="搜直播/比赛/频道" class="search-default">
+						<div class="search-submit-btn">
+							<input type="submit" class="search-submit">
+						</div>
+					</form>
+				</div>
+				<div class="notice">
+					<p>
+						<a href="https://www.baidu.com/">滚动播放公告</a>
+					</p>
+				</div>
+			</div>
+			<div class="viewing">
+				<div class="nav-container">
+					<div class="nav-entrance">
+						<a href="{{ item.route }}" ng-class="{curcate:item.name == menuName}" ng-click="changeLeftMenu(item.name)" ng-repeat="item in leftMenu">
+							<span class="iconfont icon-qita"></span>
+							<span>{{ item.name }}</span>
+						</a>
+					</div>
+					<!-- <div class="nav-recommend">
+						<div class="recommend-div curcate">
+							<a href="" target="_blank">
+								<span>推荐分类</span><span class="iconfont icon-more"></span>
+							</a>
+							<div class="category-div">
+								<a href="" target="_blank" class="active">中甲</a>
+								<a href="" target="_blank" class="">中超</a>
+								<a href="" target="_blank" class="">中超</a>
+								<a href="" target="_blank" class="">梅超</a>
+								<a href="" target="_blank" class="">国足</a>
+								<a href="" target="_blank" class="">职业联赛</a>
+								<a href="" target="_blank" class="">热身赛</a>
+								<a href="" target="_blank" class="">高校联盟</a>
+							</div>
+						</div>
+						<div class="recommend-div">
+							<a href="" target="_blank">
+								<span>热门赛事</span><span class="iconfont icon-more"></span>
+							</a>
+							<div class="category-div">
+								<a href="" target="_blank" class="">中甲</a>
+								<a href="" target="_blank" class="">韩式拖拉机对阵中国制造</a>
+								<a href="" target="_blank" class="">中超</a>
+								<a href="" target="_blank" class="">梅超</a>
+								<a href="" target="_blank" class="">国足</a>
+								<a href="" target="_blank" class="">职业联赛</a>
+								<a href="" target="_blank" class="">热身赛</a>
+								<a href="" target="_blank" class="">高校联盟</a>
+							</div>
+						</div>
+						<div class="recommend-div">
+							<a href="" target="_blank">
+								<span>精彩回顾</span><span class="iconfont icon-more"></span>
+							</a>
+							<div class="category-div">
+								<a href="" target="_blank" class="">中甲</a>
+								<a href="" target="_blank" class="">韩式拖拉机对阵中国制造</a>
+								<a href="" target="_blank" class="">中超</a>
+								<a href="" target="_blank" class="">梅超</a>
+								<a href="" target="_blank" class="">国足</a>
+								<a href="" target="_blank" class="">职业联赛</a>
+								<a href="" target="_blank" class="">热身赛</a>
+								<a href="" target="_blank" class="">高校联盟</a>
+							</div>
+						</div>
+						<div class="recommend-div">
+							<a href="" target="_blank">
+								<span>十佳球</span><span class="iconfont icon-more"></span>
+							</a>
+							<div class="category-div">
+								<a href="" target="_blank" class="">中甲</a>
+								<a href="" target="_blank" class="">韩式拖拉机对阵中国制造</a>
+								<a href="" target="_blank" class="">中超</a>
+								<a href="" target="_blank" class="">梅超</a>
+								<a href="" target="_blank" class="">国足</a>
+								<a href="" target="_blank" class="">职业联赛</a>
+								<a href="" target="_blank" class="">热身赛</a>
+								<a href="" target="_blank" class="">高校联盟</a>
+							</div>
+						</div>
+					</div> -->
+		
+				</div>
+			</div>
+		</div>
+		<div class="nav-min">
+				<div class="logoimg">
+					<a href="javascript:;">
+						<img src="/static/img/logo-min.png" alt="直播吧">
+					</a>
+				</div>
+				<div class="column-list">
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<div class="column-div">
+									<span class="iconfont icon-qita"></span>
+									<p>全部分类</p>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="column-div">
+									<span class="iconfont icon-qita"></span>
+									<p>世界杯</p>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="column-div">
+									<span class="iconfont icon-qita"></span>
+									<p>NBA</p>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="column-div">
+									<span class="iconfont icon-qita"></span>
+									<p>热门赛事</p>
+								</div>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="column-div">
+									<span class="iconfont icon-qita"></span>
+									<p>十佳球</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+		</div>
+		<!--用户信息-->
+		<!--未登录状态-->
+			<div class="operation-div" ng-if="loginStatus.status == 'fail'">
+				<p class="denglu-btn" ng-click="showLoginModal('login')">登录</p>
+				<p class="zhuce-btn" ng-click="showLoginModal('reg')">注册</p>
+			</div>
+		<!--未登录状态end-->
+		<!--登录状态 min侧边 用户-->
+		<div class="user-min" ng-if="loginStatus.status == 'success'">
+			<div class="user-img">
+					<a href="javascript:;"><p><img src="../../static/img/userbg.jpg"/></p></a>
+				</div>
+		</div>
+		<!--登录状态 min侧边 用户end-->
+			
+		<!--登录状态-->
+		<div class="sidebar-userinfo"  ng-if="loginStatus.status == 'success'" show-person-info hover="hover">
+			<div class="user-div">
+				<div class="user-img">
+					<p><img src="../../static/img/userbg.jpg"/></p>
+				</div>
+				<div class="user-name">
+					<h2>Damon-sos</h2>
+					<p>等级</p>
+				</div>
+			</div>
+			<div class="user-gold">
+				<p>
+					<i class="iconfont icon-qita"></i>
+					<span>10</span>
+				</p>
+				<p>
+					<i class="iconfont icon-qita"></i>
+					<span>10</span>
+				</p>
+			</div>
+			<div class="" ng-show="hover">
+				<div class="voucher-div">
+					<a href="#!/recharge">充值猫币</a>
+					<p>冲10元送60柱子</p>
+				</div>
+				<div class="record-list">
+					<div class="record-div">
+						<a href="javascript:;">消费记录</a>
+						<a href="javascript:;">竞猜记录</a>
+						<a href="javascript:;">观看历史</a>
+						<a href="javascript:;">
+							<span>我的消息
+								<i class="news-i">20</i>
+							</span>
+						</a>
+						<a href="javascript:;">我的订阅</a>
+						<a href="javascript:;">车队</a>
+					</div>
+				</div>
+				<div class="set-div">
+					<div class="set-list">
+						<a href="javascript:;">
+							<i class="iconfont icon-qita"></i>
+							<span>设置</span>
+						</a>
+						<a href="javascript:;">
+							<i class="iconfont icon-qita"></i>
+							<span>退出登录</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--登录状态end-->
+		<!--用户信息end-->
+		<a class="icon-arrow-open" ng-click="showLeftSidebar()"></a>
+
+		<!--登录注册弹层-->
+		<div class="popup"  ng-show="loginModalStatus.status">
+			<div class="popup-div">
+				<div class="register-head" >
+					<a ng-class="{active: modalType.type == 'login'}" href="javascript:;" ng-click="changeLoginTab('login')">登录</a>
+					<a ng-class="{active: modalType.type == 'reg'}" href="javascript:;" ng-click="changeLoginTab('reg')">注册</a>
+				</div>
+				<div class="guanbi">
+					<a href="javascript:;" class="iconfont icon-qita" ng-click="showLoginModal('close')"></a>
+				</div>
+				<!--登录-->
+				<div class="register-input" ng-if="modalType.type == 'login'" ng-controller="LoginCtrl">
+					<form name="loginForm" novalidate>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input">
+								<span>+86</span>
+								<input type="text" ng-model="loginData.phone" name="phone" ng-focus="focus=true" ng-blur="focus=false" placeholder="输入手机号" maxlength="11" ng-pattern="/^1[3|4|5|7|8]\d{9}$/"  required />
+									<p ng-show="loginForm.phone.$error.pattern  && !focus">输入正确手机号码</p>
+									<p ng-show="loginForm.phone.$error.required && !focus">输入手机号码</p>
+							</div>
+						</div>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input" style="padding-left: 0;">
+								<input type="password" name="password"  ng-model="loginData.password" placeholder="密码" required />
+								<p ng-show="false">帐号密码错误</p>
+							</div>
+						</div>
+						<div class="submin-div">
+							<input type="submit" value="立即登录" ng-disabled="!loginForm.$valid" ng-click="login()" />
+							<p>
+								<a href="javascript:;">忘记密码</a>
+							</p>
+						</div>
+					</form>
+				</div>
+				<!--登录end-->
+				<!--注册-->
+				<div class="register-input" ng-show="modalType.type == 'reg'" ng-controller="RegCtrl">
+					<form name="regForm" novalidate>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input">
+								<span>+86</span>
+								<input type="text" name="regphone" ng-model="regData.phone" ng-focus="focus=true" ng-blur="focus=false" placeholder="输入手机号" maxlength="11" required ng-pattern="/^1[3|4|5|7|8]\d{9}$/" />
+								<p ng-show="regForm.regphone.$error.pattern && !focus">输入正确手机号码</p>
+							</div>
+						</div>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input reg-yanz " style="padding-left: 0;">
+								<input type="text" name="acode" placeholder="验证码" maxlength="6" />
+								<button>获取验证码</button><p style="padding-right: 100px;" ng-show="false">输入有误</p>
+							</div>
+						</div>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input" style="padding-left: 0;">
+								<input type="text" name="nickName" ng-model="regData.nickName" ng-focus="focus1=true" ng-blur="focus1=false"  placeholder="称昵" maxlength="16" required ng-pattern="/^[\w\u4e00-\u9fa5]{4,16}$/" />
+								<p ng-show="regForm.nickName.$error.pattern  && !focus1">昵称应为4-16个字符,不包括特殊符号</p>
+								<p ng-show="regForm.nickName.$error.required  && !focus1">请输入昵称</p>
+							</div>
+						</div>
+						<div class="reg-div">
+							<span class="iconfont icon-qita"></span>
+							<div class="reg-input" style="padding-left: 0;">
+								<input type="password" name="password" placeholder="密码" ng-focus="focus2=true" ng-blur="focus2=false" ng-model="regData.password"   ng-pattern="/^\w{6,20}$/" />
+								<p ng-show="regForm.password.$error.pattern && !focus2">密码至少6位且小于20位</p>
+								<p ng-show="regForm.password.$error.required && !focus2">请输入密码</p>
+							</div>
+						</div>
+						<div class="submin-div" style="padding-bottom: 20px;">
+							<p class="agreement-p">
+								<input type="checkbox" ng-model="regData.agreement" ng-checked="regData.agreement" />
+								<span class="iconfont icon-moreunfold"></span>我已阅读并同意
+								<a href="javascript:;">《用户协议》</a>和
+								<a href="javascript:;">《隐私政策》</a>
+							</p>
+							<input type="submit" ng-disabled="!regForm.$valid" ng-click="register()" value="立即注册"  />
+						</div>
+					</form>
+				</div>
+				<!--注册end-->
+				<div class="register-way">
+					<p>
+						<span>社区账号登录</span>
+						<a class="qq" href="javascript:;"></a>
+						<a class="wx" href="javascript:;"></a>
+						<a class="wb" href="javascript:;"></a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!--登录注册弹层end-->
+
+		
+	</div>
+	<!--聊天开始-->
+	<div class="chat-box" ng-controller="RightSidebarCtrl" ng-class="{true:'',false:'chat-min'}[rightSidebarStatus]">
+		<!-- <iframe src="/static/chat.html" frameborder="0" style="width: 100%; height: 100%;" scrolling="no"></iframe> -->
+		<div class="chat ">
+			<div class="room-notice">
+				<div class="room-notice-content">
+					<i class="room-notice-icon"></i>
+					<strong>直播公告：</strong>
+					帅的人已经在发弹幕了，而丑的人还在看着。
+				</div>
+			</div>
+			<div class="room-chat viewing">
+				<ul class="room-chat-messages">
+					<li class="msg" ng-repeat="item in chat.Message">
+						<span class="un" ng-if="item.Type==2">{{ item.User }}:</span>
+						<span class="un" ng-if="item.Type!=2">系统消息:</span>
+						<span class="ctx" ng-if="item.Type==-1">{{item.Content}}</span>
+						<span class="ctx" ng-if="item.Type==0">{{item.User}}加入房间</span>
+						<span class="ctx" ng-if="item.Type==1">{{item.User}}离开房间</span>
+						<span class="ctx" ng-if="item.Type==2">{{item.Content}}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="room-submit">
+				<div class="room-chat-tools">
+					<a href="#" title="游客465253">
+						<i class="icon user"></i>
+						<strong>游客465253</strong>
+					</a>
+					<a href="#" data-action="reload" style="float: right; margin-right: 10px;" title="当聊天无法发送消息或无法收到消息时，请尝试重新载入。">
+						<img style="float: left; margin-right: 3px; margin-top: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA2FBMVEW/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v78m9a2bAAAAR3RSTlMA8fz3/gYeBxoP1phPVvbo+E2o6c+vzFStUeqpHf2XK65Q0E4ZTLbVVc0Q0ZkbphULrMPSP8m180fOpXr6E6fLLFMEJtO3UnD4VQIAAADNSURBVHheTY/XcsJQEEN13TtuuEBiwAZCQknvver//4h1Jg/R29HsSiOIzOR8RGNQdWZPwLxR0S5/IpXvCGJ+Q97ePYdVTC7FMRtyHZ4BYRSRvo1Ecf2G049P73J1TxWgYhxicXH1wEeUOocY8Pjk4IjXMb8st2CGQ44x0yjSaqQ0/hs/eBHj70XkWe4rR5hSX2HhaZqX4L0P7RTbCay6tjDJ+1rTJ9vSBdwyJzc24CxJvUjTQie/t7IFjq/6TBm3+WXADqaZYWTDQO6xB+VIHvjrvRFoAAAAAElFTkSuQmCC"
+						/>
+						<span style="float: left; color: gray; " class="left">重新载入</span>
+					</a>
+				</div>
+				<form data-ng-submit="postMessage()">
+					<div class="room-chat-sender">
+						<div class="room-chat-inputfield">
+							<textarea class="room-chat-texta" placeholder="快和大家一块聊天吧" data-ng-model="message" ng-disabled="isdisabled"></textarea>
+							<button class="room-chat-send" type="submit">发送</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<a href="javascript:;" class="room-chat-expand-btn" ng-click="showRightSidebar()"></a>
+	</div>
+	<!--聊天结束-->
+	<div class="channel-content" ng-view>
+		
+
+	</div>
+<?end?>
+
+
+icon
